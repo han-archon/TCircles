@@ -15,7 +15,6 @@ const circlesList = ((circles) => {
 
 const allListQuery = "SELECT *  FROM circles";
 
-
 circlesList.allList = (result) => {
    db.query(allListQuery, (err, res) => {
       if (err) {
