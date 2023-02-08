@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors  = require('cors');
 
+const circlesRouter = require('./app/routes/circles_route');
+
 
 
 const app = express();
@@ -14,7 +16,7 @@ app.use(cors());
 
 
 app.get('/', function (req, res) {
-    res.send('Hello World!');
+    res.send('Hello World! Circles Express Server');
 });
 
 //클라이언트에서 HTTP 요청 메소드 중 GET 를 이용해서 'host:port' 로 요청을 보내면 실행되는 라우트
@@ -24,5 +26,4 @@ app.listen(port, () => {
     console.log(`서버가 실행됩니다., http://13.124.206.38:${port}`);
 });
 
-//app.use('/', adminRouter);
-//app.use('/admin', adminRouter);
+app.use('/circles', circlesRouter);
