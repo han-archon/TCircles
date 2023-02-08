@@ -3,6 +3,6 @@ const router  = express.Router();
 const circlesController = require('../controller/circles_controller');
 
 
-router.get("/circles", circlesController.getCirclesList);
+router.get("/", circlesController.getCirclesList);
 
 module.exports = router;
