@@ -1,5 +1,5 @@
 module.exports = {
-    HOST: "13.124.206.38",
+    HOST: "127.0.0.1",
     USER: "root",
     PASSWORD: "Dodo123!@#",
     DB: "tcircles"
