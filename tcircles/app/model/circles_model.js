@@ -21,7 +21,7 @@ const allListQuery = "SELECT *  FROM circles";
 
 circlesList.allList = (result) => {
    db.query(allListQuery, (err, res) => {
-      if(!err)  {
+      if(err)  {
          returnData =  ({data: err, message: "circles Not List" , successCode: successCode, errorCode: 403});
          result(null, returnData);
       } else {
