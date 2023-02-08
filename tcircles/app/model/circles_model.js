@@ -13,15 +13,20 @@ const circlesList = ((circles) => {
    this.regdate                   = circles.regdate;
 });
 
+let returnData  = "";
+const successCode = 0;
+const errCode     = 0;
+
 const allListQuery = "SELECT *  FROM circles";
 
 circlesList.allList = (result) => {
    db.query(allListQuery, (err, res) => {
-      if (err) {
-         console.log("error : " , err);
-         throw err;
+      if(!err)  {
+         returnData =  ({data: err, message: "circles Not List" , successCode: successCode, errorCode: 403});
+         result(null, returnData);
       } else {
-         result(null, res);
+         returnData = {data: res, successCode: 200, errorCode: errCode};
+         result(null, returnData);
       }
    });
 }
