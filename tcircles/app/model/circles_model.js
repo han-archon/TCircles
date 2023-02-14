@@ -19,7 +19,7 @@ const errCode     = 0;
 
 const allListQuery = "SELECT *  FROM circles";
 const insertQuery  = `INSERT INTO circles (member_id, circles_name, circles_contents, type_id, circles_join_limit, circles_private_yn, circles_private_password, regdate)
-                      VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
+                      VALUES (?, ?, ?, ?, ?, ?, ?, NOW())`;
 
 /**
  * 동아리 방 List
