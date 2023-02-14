@@ -7,7 +7,7 @@ exports.circlesCreate = (req, res) => {
         'id'       :     req.body.member_id,
         'name'     :     req.body.circles_name,
         'contents' :     req.body.circles_contents,
-        'typeId'   :     req.body.circles_join_limit,
+        'typeId'   :     req.body.type_id,
         'joinLimit':     req.body.circles_join_limit,
         'isPrivate':     req.body.circles_private_yn,
         'password' :     req.body.circles_private_password

@@ -28,10 +28,10 @@ const insertQuery  = `INSERT INTO circles (member_id, circles_name, circles_cont
 circlesList.allList = (result) => {
    db.query(allListQuery, (err, res) => {
       if(err)  {
-         returnData = returnMessage(err, "circles Not List", successCode, 403 );
+         returnData = util.returnMessage(err, "circles Not List", successCode, 403 );
          result(null, returnData);
       } else {
-         returnData = returnMessage(null, successCode, errCode);
+         returnData = util.returnMessage(null, successCode, errCode);
          result(null, returnData);
       }
    });
@@ -56,10 +56,10 @@ circlesList.create = (data, result) => {
 
    db.query(insertQuery, insertParms, (err, res) => {
       if (err) {
-         returnData = returnMessage(err, "Circles Not Create", successCode, 403);
+         returnData = util.returnMessage(err, "Circles Not Create", successCode, 403);
          result(null, returnData);
       } else {
-         returnData = returnMessage(null, "Circles Not Create", successCode, 0);
+         returnData = util.returnMessage(null, "Circles Not Create", successCode, 0);
          result(null, returnData);
       }
    });
