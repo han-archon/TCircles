@@ -1,6 +1,6 @@
 //DB 연결 객체 가져오기
 const db = require('../../dbConnect/dbConnect');
-
+const util = require('../common/util');
 //생성자
 const circlesList = ((circles) => {
    this.member_id                 = circles.member_id;
@@ -14,18 +14,52 @@ const circlesList = ((circles) => {
 });
 
 let returnData  = "";
-const successCode = 0;
+const successCode = 200;
 const errCode     = 0;
 
 const allListQuery = "SELECT *  FROM circles";
+const insertQuery  = `INSERT INTO circles (member_id, circles_name, circles_contents, type_id, circles_join_limit, circles_private_yn, circles_private_password, regdate)
+                      VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
 
+/**
+ * 동아리 방 List
+ * @param result
+ */
 circlesList.allList = (result) => {
    db.query(allListQuery, (err, res) => {
       if(err)  {
-         returnData =  ({data: err, message: "circles Not List" , successCode: successCode, errorCode: 403});
+         returnData = returnMessage(err, "circles Not List", successCode, 403 );
          result(null, returnData);
       } else {
-         returnData = {data: res, successCode: 200, errorCode: errCode};
+         returnData = returnMessage(null, successCode, errCode);
+         result(null, returnData);
+      }
+   });
+}
+
+/**
+ * 동아리 방 Create
+ * @param data
+ * @param result
+ */
+circlesList.create = (data, result) => {
+
+   const insertParms = [
+      data.id,
+      data.name,
+      data.contents,
+      data.typeId,
+      data.joinLimit,
+      data.isPrivate,
+      data.password,
+   ];
+
+   db.query(insertQuery, insertParms, (err, res) => {
+      if (err) {
+         returnData = returnMessage(err, "Circles Not Create", successCode, 403);
+         result(null, returnData);
+      } else {
+         returnData = returnMessage(null, "Circles Not Create", successCode, 0);
          result(null, returnData);
       }
    });
