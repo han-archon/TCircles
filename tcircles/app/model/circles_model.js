@@ -81,7 +81,7 @@ circlesList.update = (data, result) => {
       if (!err) {
          const count = JSON.stringify(res[0].count);
          if (count[0] < 1) {
-            returnData = util.returnMessage(null, 'Circles Index Not Exits', successCode, 403);
+            returnData = util.returnMessage(null, 'Circles Index Not Exits', 0, 403);
             result(null, returnData);
          } else {
 
