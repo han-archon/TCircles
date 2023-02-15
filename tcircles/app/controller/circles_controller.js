@@ -20,6 +20,23 @@ exports.circlesCreate = (req, res) => {
     });
 }
 
+exports.circlesUpdate = (req, res) => {
+    const updateData = {
+        'index'    : req.params.index,
+        'name'     : req.body.circles_name,
+        'contents' : req.body.circles_contents,
+        'typeId'   : req.body.type_id,
+        'joinLimit': req.body.circles_join_limit,
+        'isPrivate': req.body.circles_private_yn,
+        'password' : req.body.circles_private_password
+    }
+
+    circlesModel.update(updateData, (err, result) => {
+       if (err) throw err;
+       res.send(result);
+    });
+}
+
 exports.getCirclesList = (req, res, next) => {
     circlesModel.allList((err, circlesList) => {
        if (err) throw  err;

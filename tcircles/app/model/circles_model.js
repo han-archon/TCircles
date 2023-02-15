@@ -20,6 +20,12 @@ const errCode     = 0;
 const allListQuery = "SELECT *  FROM circles";
 const insertQuery  = `INSERT INTO circles (member_id, circles_name, circles_contents, type_id, circles_join_limit, circles_private_yn, circles_private_password, regdate)
                       VALUES (?, ?, ?, ?, ?, ?, ?, NOW())`;
+const updateQuery  = `UPDATE circles 
+                         SET circles_name = ?, circles_contents = ?, type_id = ?, circles_join_limit = ?, circles_private_yn = ?, circles_private_password = ?
+                       WHERE circles_idx = ?`;
+const countQuery   = `SELECT COUNT(*)  AS count
+                        FROM circles 
+                       WHERE circles_idx = ?`;
 
 /**
  * 동아리 방 List
@@ -64,6 +70,46 @@ circlesList.create = (data, result) => {
       }
    });
 }
+
+/**
+ * 동아리 방 Update
+ * @param data
+ * @param result
+ */
+circlesList.update = (data, result) => {
+   db.query(countQuery, data.index, (err, res) => {
+      if (!err) {
+         const count = JSON.stringify(res[0].count);
+         if (count[0] < 1) {
+            returnData = util.returnMessage(null, 'Circles Index Not Exits', successCode, 403);
+            result(null, returnData);
+         } else {
+
+            let updateParms = [
+                data.name,
+                data.contents,
+                data.typeId,
+                data.joinLimit,
+                data.isPrivate,
+                data.password,
+                data.index
+            ];
+
+            db.query(updateQuery, updateParms, (err, res) => {
+               if (err) {
+                  returnData = util.returnMessage(err, "Circles Not Update", successCode, 403);
+                  result(null, returnData);
+               } else {
+                  returnData = util.returnMessage(null, "Circles Success Update", 200, errCode);
+                  result(null, returnData);
+               }
+            });
+         }
+      }
+   });
+}
+
+
 
 module.exports = circlesList;
 
