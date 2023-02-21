@@ -23,6 +23,9 @@ const insertQuery  = `INSERT INTO circles (member_id, circles_name, circles_cont
 const updateQuery  = `UPDATE circles 
                          SET circles_name = ?, circles_contents = ?, type_id = ?, circles_join_limit = ?, circles_private_yn = ?, circles_private_password = ?
                        WHERE circles_idx = ?`;
+const deleteQuery  = `DELETE 
+                        FROM circles 
+                       WHERE circles_idx = ?`
 const countQuery   = `SELECT COUNT(*)  AS count
                         FROM circles 
                        WHERE circles_idx = ?`;
@@ -106,6 +109,50 @@ circlesList.update = (data, result) => {
             });
          }
       }
+   });
+}
+
+circlesList.delete = async (data, result) => {
+   try {
+      if (data) {
+         const isCheck = await isCount(data);
+         if (isCheck < 1) {
+            returnData = util.returnMessage(error, "Circles Index Not Exist", 0 , 403);
+            result(null, returnData);
+         } else {
+            db.query(deleteQuery, data, (err, res) => {
+               if (!err) {
+                  returnData = util.returnMessage(err, "Circles Success Delete", 200, 0);
+                  result(null, returnData);
+               } else {
+                  returnData = util.returnMessage(err, "Circles Not Delete", 0, 403);
+                  result(null, returnData);
+               }
+            });
+         }
+      }
+   } catch (error) {
+      returnData = util.returnMessage(error, "Delete Failed", 0 , 403);
+      result(null, returnData);
+   }
+}
+
+/**
+ * Index CountCheck
+ * @param index
+ * @returns {Promise<unknown>}
+ */
+const isCount = (index) => {
+   let count = 0;
+   return new Promise((resolve, reject) => {
+      db.query(countQuery, index, (err, res) => {
+         if (err) {
+           reject();
+         } else {
+            count = JSON.stringify(res[0].count);
+            resolve(count[0]);
+         }
+      });
    });
 }
 

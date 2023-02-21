@@ -37,6 +37,16 @@ exports.circlesUpdate = (req, res) => {
     });
 }
 
+exports.circlesDelete = (req, res) => {
+    const circlesIndex = req.params.index;
+
+    circlesModel.delete(circlesIndex, (err, result) => {
+        res.send(result);
+    }).then().catch((err)  => {
+        res.send(err);
+    });
+}
+
 exports.getCirclesList = (req, res, next) => {
     circlesModel.allList((err, circlesList) => {
        if (err) throw  err;
