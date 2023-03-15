@@ -40,7 +40,7 @@ circlesList.allList = (result) => {
          returnData = util.returnMessage(err, "circles Not List", successCode, 403 );
          result(null, returnData);
       } else {
-         returnData = util.returnMessage(null, successCode, errCode);
+         returnData = util.returnMessage(res, successCode, errCode);
          result(null, returnData);
       }
    });
